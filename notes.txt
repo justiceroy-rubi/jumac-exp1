@@ -1,0 +1,47 @@
+3-1
+E:\Video Tutorials\Copied to Enclosure\Complete guide to building an app with .Net Core and React
+
+https://www.donovanbrown.com/post/Hide-folders-in-Visual-Studio-Code-Explorer
+https://stackoverflow.com/questions/42077229/switch-between-dotnet-core-sdk-versions
+dotnet --info
+dotnet --list-sdks
+
+dotnet new globaljson
+help:
+dotnet -h 
+
+dotnet new sln
+dotnet new classlib -n Domain
+dotnet new classlib -n Application //business logic
+dotnet new classlib -n Persistence //db logic
+dotnet new webapi -n API
+
+dotnet sln add Domain/
+dotnet sln add Application/
+dotnet sln add Persistence/
+dotnet sln add API/
+
+Domain - no dependency
+Persistence - Domain
+dotnet add reference ../Domain/
+Application - Domain, Persistence
+dotnet add reference ../Domain/
+dotnet add reference ../Persistence/
+API - Application
+dotnet add reference ../Application/
+
+dotnet run -p API/
+
+nuget
+Microsoft.EntityFrameworkCore@2.2.207
+Microsoft.EntityFrameworkCore.sqlite@2.2.207
+
+dotnet ef migrations add InitialCreate -p Persistence/ -s API/
+
+dotnet ef -h
+
+dotnet watch run
+
+dotnet ef migrations add SeedValues -p Persistence/ -s API/
+
+create-react-app client-app --use-npm --template typescript
