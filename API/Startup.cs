@@ -32,6 +32,13 @@ namespace API
             {
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddCors(opt => 
+            {
+                opt.AddPolicy("CorsPolicy", policy => 
+                {
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3017");
+                });
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -51,6 +58,7 @@ namespace API
             }
 
             //app.UseHttpsRedirection(); //Http will be redirected to https, requires self sign certificate difficult in dev mode
+            app.UseCors("CorsPolicy");
             app.UseMvc();
         }
     }
